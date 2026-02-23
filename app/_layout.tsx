@@ -26,7 +26,7 @@ export default function RootLayout() {
             </View>
           ),
           headerTitleAlign: "left",
-          headerStyle: { backgroundColor: "#e75e34ff" },
+          headerStyle: { backgroundColor: "#ec7c7cff" },
           headerTintColor: "#fff",
           headerTitleStyle: { fontWeight: "bold" },
         }}

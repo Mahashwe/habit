@@ -96,9 +96,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     backgroundColor: "#5faafaff",
     borderRadius: 5,
-    marginRight: 250,
-    marginLeft: "1%",
-    alignItems: "flex-start",
+    marginLeft: "30%",
+    marginRight: "35%",
+    textAlign: "center",
   },
   buttonText: {
     color: "#fff",
