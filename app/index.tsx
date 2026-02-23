@@ -23,6 +23,8 @@ export default function App() {
           "Motivation is what gets you started. Habit is what keeps you going."
         </Text>
 
+        <Text style={styles.text2}>Completed Goals : {completedgoal}</Text>
+
         <Pressable
           style={styles.button}
           onPress={() => router.push("/add_habit")}
