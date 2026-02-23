@@ -2,7 +2,6 @@ import {
   Text,
   View,
   StyleSheet,
-  Button,
   Pressable,
   ScrollView,
   Image,
@@ -10,9 +9,12 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useHabits } from "@/context/habits";
+import React, { useState } from "react";
+import Checkbox from "expo-checkbox";
 
 export default function App() {
-  const { habits } = useHabits();
+  const { habits, toggleHabitDone } = useHabits();
+  const completedgoal = habits.filter((h) => h.frequency === 0).length;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,7 +42,13 @@ export default function App() {
             </View>
           ) : (
             habits.map((habit) => (
-              <View key={habit.id} style={styles.box}>
+              <View
+                key={habit.id}
+                style={[
+                  styles.box,
+                  habit.frequency === 0 && { backgroundColor: "#d4f8d4" },
+                ]}
+              >
                 <Text style={[styles.habitText, { fontWeight: "bold" }]}>
                   {habit.habitName}
                 </Text>
@@ -48,6 +56,12 @@ export default function App() {
                 <Text style={styles.habitText}>
                   Goal: {habit.frequency} days
                 </Text>
+                <Checkbox
+                  style={styles.cbox}
+                  value={habit.done ?? false}
+                  disabled={habit.frequency === 0}
+                  onValueChange={(value) => toggleHabitDone(habit.id, value)}
+                />
               </View>
             ))
           )}
@@ -133,5 +147,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderRadius: 100,
     backgroundColor: "#120201ff",
+  },
+
+  cbox: {
+    marginTop: 10,
+    marginRight: "100%",
   },
 });
