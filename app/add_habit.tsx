@@ -1,6 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
+import { router } from "expo-router";
 
 const AddHabit = () => {
   const [habitName, setHabitName] = useState("");
@@ -14,6 +15,14 @@ const AddHabit = () => {
     }
     const habit = { habitName, habitDescription };
     console.log(habit);
+    router.push({
+      pathname: "/",
+      params: {
+        habitName,
+        habitDescription,
+        frequency,
+      },
+    });
   };
 
   return (
