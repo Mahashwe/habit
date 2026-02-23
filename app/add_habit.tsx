@@ -1,7 +1,15 @@
-import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  Image,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import { useHabits } from "@/context/habits";
+import { router } from "expo-router";
 
 const AddHabit = () => {
   const { addHabit, habits } = useHabits();
@@ -61,15 +69,8 @@ const AddHabit = () => {
             <Text style={styles.buttonText}>Submit</Text>
           </Pressable>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => {
-              setHabitName("");
-              setHabitDescription("");
-              setFrequency("");
-            }}
-          >
-            <Text style={styles.buttonText}>Reset</Text>
+          <Pressable style={styles.button} onPress={() => router.push("/")}>
+            <Text style={styles.buttonText}>Back to Home</Text>
           </Pressable>
 
           <Pressable
@@ -83,6 +84,12 @@ const AddHabit = () => {
             <Text style={styles.canceltext}>X</Text>
           </Pressable>
         </View>
+      </View>
+      <View>
+        <Image
+          style={styles.backgroundImage}
+          source={require("../assets/images/bg.jpg")}
+        />
       </View>
     </SafeAreaView>
   );
@@ -142,5 +149,12 @@ const styles = StyleSheet.create({
     color: "#000000ff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  backgroundImage: {
+    height: 350,
+    width: "100%",
+    borderRadius: 20,
+    marginTop: 20,
+    opacity: 0.5,
   },
 });

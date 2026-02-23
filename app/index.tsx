@@ -5,6 +5,7 @@ import {
   Button,
   Pressable,
   ScrollView,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -28,9 +29,15 @@ export default function App() {
         </Pressable>
         <View>
           {habits.length === 0 ? (
-            <Text style={styles.habitText}>
-              No habits added yet. Start tracking!
-            </Text>
+            <View>
+              <Text style={styles.text3}>
+                No habits added yet. Start tracking!
+              </Text>
+              <Image
+                style={styles.img}
+                source={require("../assets/images/none.png")}
+              />
+            </View>
           ) : (
             habits.map((habit) => (
               <View key={habit.id} style={styles.box}>
@@ -102,5 +109,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
     lineHeight: 24,
+  },
+  text3: {
+    fontSize: 17,
+    marginTop: 80,
+    marginBottom: 10,
+    marginLeft: "8%",
+    marginRight: "8%",
+    fontWeight: "bold",
+    fontFamily: "Arial",
+    color: "#003a71ff",
+    backgroundColor: "#eecdccff",
+    padding: 10,
+    borderRadius: 10,
+    textAlign: "center",
+  },
+  img: {
+    padding: "20%",
+    width: 200,
+    height: 200,
+    marginTop: 30,
+    marginBottom: 30,
+    alignSelf: "center",
+    borderRadius: 100,
+    backgroundColor: "#120201ff",
   },
 });
