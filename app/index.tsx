@@ -1,4 +1,11 @@
-import { Text, View, StyleSheet, Button, Pressable } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useHabits } from "@/context/habits";
@@ -8,33 +15,37 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>Track Your Habits</Text>
-      <Text style={styles.text2}>
-        "Motivation is what gets you started. Habit is what keeps you going."
-      </Text>
-      <Pressable
-        style={styles.button}
-        onPress={() => router.push("/add_habit")}
-      >
-        <Text style={styles.buttonText}>+ Add Habit</Text>
-      </Pressable>
-      <View style={styles.box}>
-        {habits.length === 0 ? (
-          <Text style={styles.habitText}>
-            No habits added yet. Start tracking!
-          </Text>
-        ) : (
-          habits.map((habit) => (
-            <View key={habit.id} style={{ marginBottom: 15 }}>
-              <Text style={[styles.habitText, { fontWeight: "bold" }]}>
-                {habit.habitName}
-              </Text>
-              <Text style={styles.habitText}>{habit.habitDescription}</Text>
-              <Text style={styles.habitText}>Goal: {habit.frequency} times</Text>
-            </View>
-          ))
-        )}
-      </View>
+      <ScrollView>
+        <Text style={styles.text}>Track Your Habits</Text>
+        <Text style={styles.text2}>
+          "Motivation is what gets you started. Habit is what keeps you going."
+        </Text>
+        <Pressable
+          style={styles.button}
+          onPress={() => router.push("/add_habit")}
+        >
+          <Text style={styles.buttonText}>+ Add Habit</Text>
+        </Pressable>
+        <View>
+          {habits.length === 0 ? (
+            <Text style={styles.habitText}>
+              No habits added yet. Start tracking!
+            </Text>
+          ) : (
+            habits.map((habit) => (
+              <View key={habit.id} style={styles.box}>
+                <Text style={[styles.habitText, { fontWeight: "bold" }]}>
+                  {habit.habitName}
+                </Text>
+                <Text style={styles.habitText}>{habit.habitDescription}</Text>
+                <Text style={styles.habitText}>
+                  Goal: {habit.frequency} days
+                </Text>
+              </View>
+            ))
+          )}
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -79,7 +90,7 @@ const styles = StyleSheet.create({
   box: {
     marginTop: 20,
     marginLeft: "8%",
-    marginRight: "50%",
+    marginRight: "5%",
     padding: 20,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -87,6 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9ff",
   },
   habitText: {
+    marginTop: "1%",
     fontSize: 16,
     color: "#333",
     lineHeight: 24,
