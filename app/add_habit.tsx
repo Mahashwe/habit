@@ -58,6 +58,17 @@ const AddHabit = () => {
           >
             <Text style={styles.buttonText}>Reset</Text>
           </Pressable>
+
+          <Pressable
+            style={styles.cancel}
+            onPress={() => {
+              setHabitName("");
+              setHabitDescription("");
+              setFrequency("");
+            }}
+          >
+            <Text style={styles.canceltext}>X</Text>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
@@ -77,6 +88,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: "#5faafaff",
     padding: 16,
+    position: "relative",
   },
   text: {
     fontSize: 18,
@@ -105,6 +117,16 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  cancel: {
+    position: "absolute",
+    top: -40,
+    right: 8,
+  },
+  canceltext: {
+    color: "#000000ff",
     fontSize: 16,
     fontWeight: "bold",
   },
