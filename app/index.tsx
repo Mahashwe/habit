@@ -9,11 +9,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useHabits } from "@/context/habits";
-import React, { useState } from "react";
 import Checkbox from "expo-checkbox";
 
 export default function App() {
-  const { habits, toggleHabitDone } = useHabits();
+  const { habits, toggleHabitDone, deleteHabit } = useHabits();
   const completedgoal = habits.filter((h) => h.frequency === 0).length;
 
   return (
@@ -23,12 +22,14 @@ export default function App() {
         <Text style={styles.text2}>
           "Motivation is what gets you started. Habit is what keeps you going."
         </Text>
+
         <Pressable
           style={styles.button}
           onPress={() => router.push("/add_habit")}
         >
           <Text style={styles.buttonText}>+ Add Habit</Text>
         </Pressable>
+
         <View>
           {habits.length === 0 ? (
             <View>
@@ -49,19 +50,28 @@ export default function App() {
                   habit.frequency === 0 && { backgroundColor: "#d4f8d4" },
                 ]}
               >
-                <Text style={[styles.habitText, { fontWeight: "bold" }]}>
-                  {habit.habitName}
-                </Text>
-                <Text style={styles.habitText}>{habit.habitDescription}</Text>
-                <Text style={styles.habitText}>
-                  Goal: {habit.frequency} days
-                </Text>
-                <Checkbox
-                  style={styles.cbox}
-                  value={habit.done ?? false}
-                  disabled={habit.frequency === 0}
-                  onValueChange={(value) => toggleHabitDone(habit.id, value)}
-                />
+                <View style={{ flex: 1 }}>
+                  <Text style={[styles.habitText, { fontWeight: "bold" }]}>
+                    {habit.habitName}
+                  </Text>
+                  <Text style={styles.habitText}>{habit.habitDescription}</Text>
+                  <Text style={styles.habitText}>
+                    Goal: {habit.frequency} days
+                  </Text>
+                </View>
+                <View style={styles.rightSide}>
+                  <Checkbox
+                    value={habit.done ?? false}
+                    disabled={habit.frequency === 0}
+                    onValueChange={(value) => toggleHabitDone(habit.id, value)}
+                  />
+                  <Pressable
+                    style={styles.deleteButton}
+                    onPress={() => deleteHabit(habit.id)}
+                  >
+                    <Text style={styles.deleteText}>Delete</Text>
+                  </Pressable>
+                </View>
               </View>
             ))
           )}
@@ -117,6 +127,12 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 15,
     backgroundColor: "#f9f9f9ff",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  rightSide: {
+    justifyContent: "center",
+    alignItems: "flex-end",
   },
   habitText: {
     marginTop: "1%",
@@ -148,9 +164,16 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     backgroundColor: "#120201ff",
   },
-
-  cbox: {
+  deleteButton: {
     marginTop: 10,
-    marginRight: "100%",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "#ff4d4dff",
+    borderRadius: 5,
+  },
+  deleteText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
