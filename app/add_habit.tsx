@@ -5,9 +5,15 @@ import { useState } from "react";
 const AddHabit = () => {
   const [habitName, setHabitName] = useState("");
   const [habitDescription, setHabitDescription] = useState("");
+  const [frequency, setFrequency] = useState("");
 
   const handleSubmit = () => {
-    console.log(habitName, habitDescription);
+    if (habitName === "" || habitDescription === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+    const habit = { habitName, habitDescription };
+    console.log(habit);
   };
 
   return (
@@ -20,15 +26,37 @@ const AddHabit = () => {
             placeholder="Enter habit name"
             value={habitName}
             onChangeText={setHabitName}
+            autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
             placeholder="Enter habit description"
             value={habitDescription}
             onChangeText={setHabitDescription}
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your goal days"
+            value={frequency}
+            onChangeText={setFrequency}
+            autoCapitalize="none"
+            keyboardType="numeric"
+            maxLength={5}
           />
           <Pressable style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Submit</Text>
+          </Pressable>
+
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              setHabitName("");
+              setHabitDescription("");
+              setFrequency("");
+            }}
+          >
+            <Text style={styles.buttonText}>Reset</Text>
           </Pressable>
         </View>
       </View>
@@ -72,6 +100,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 5,
     alignItems: "center",
+    marginTop: "3%",
+    marginBottom: "3%",
   },
   buttonText: {
     color: "#fff",
