@@ -1,12 +1,10 @@
 import { Text, View, StyleSheet, Button, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-import { useLocalSearchParams } from "expo-router";
+import { useHabits } from "@/context/habits";
 
 export default function App() {
-  const navigation = useNavigation();
-  const { habitName, habitDescription, frequency } = useLocalSearchParams();
+  const { habits } = useHabits();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,12 +19,22 @@ export default function App() {
         <Text style={styles.buttonText}>+ Add Habit</Text>
       </Pressable>
       <View style={styles.box}>
-        {habitName && habitDescription && frequency ? (
-          <Text
-            style={styles.habitText}
-          >{`Habit: ${habitName}\nDescription: ${habitDescription}\nFrequency: ${frequency}`}</Text>
+        {habits.length === 0 ? (
+          <Text style={styles.habitText}>
+            No habits added yet. Start tracking!
+          </Text>
         ) : (
-          <Text>No habit added yet.</Text>
+          habits.map((habit) => (
+            <View key={habit.id} style={{ marginBottom: 15 }}>
+              <Text style={[styles.habitText, { fontWeight: "bold" }]}>
+                {habit.habitName}
+              </Text>
+              <Text style={styles.habitText}>{habit.habitDescription}</Text>
+              <Text style={styles.habitText}>
+                Goal: {habit.frequency} day{habit.frequency > 1 ? "s" : ""}
+              </Text>
+            </View>
+          ))
         )}
       </View>
     </SafeAreaView>
@@ -38,6 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
+    marginLeft: "2%",
     fontSize: 24,
     fontWeight: "bold",
   },
@@ -72,11 +81,11 @@ const styles = StyleSheet.create({
   box: {
     marginTop: 20,
     marginLeft: "8%",
-    marginRight: "8%",
+    marginRight: "50%",
     padding: 20,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 10,
+    borderRadius: 15,
     backgroundColor: "#f9f9f9ff",
   },
   habitText: {

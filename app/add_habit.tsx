@@ -1,9 +1,10 @@
 import { View, Text, TextInput, StyleSheet, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
-import { router } from "expo-router";
+import { useHabits } from "@/context/habits";
 
 const AddHabit = () => {
+  const { addHabit, habits } = useHabits();
   const [habitName, setHabitName] = useState("");
   const [habitDescription, setHabitDescription] = useState("");
   const [frequency, setFrequency] = useState("");
@@ -13,16 +14,19 @@ const AddHabit = () => {
       alert("Please fill in all fields");
       return;
     }
-    const habit = { habitName, habitDescription };
-    console.log(habit);
-    router.push({
-      pathname: "/",
-      params: {
-        habitName,
-        habitDescription,
-        frequency,
-      },
-    });
+
+    const newHabit = {
+      id: habits.length + 1,
+      habitName,
+      habitDescription,
+      frequency: parseInt(frequency, 10),
+    };
+
+    addHabit(newHabit);
+
+    setHabitName("");
+    setHabitDescription("");
+    setFrequency("");
   };
 
   return (
