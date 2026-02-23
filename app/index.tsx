@@ -30,9 +30,7 @@ export default function App() {
                 {habit.habitName}
               </Text>
               <Text style={styles.habitText}>{habit.habitDescription}</Text>
-              <Text style={styles.habitText}>
-                Goal: {habit.frequency} day{habit.frequency > 1 ? "s" : ""}
-              </Text>
+              <Text style={styles.habitText}>Goal: {habit.frequency} times</Text>
             </View>
           ))
         )}
